@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block the_title %}
+	Restaurant list
+{% endblock the_title %}
+
+{% block content%}
+	{% for item in restaurants %}
+	<a href="{% url 'restaurant_detail' restaurant_id=item.id %}">
+	<ul>
+		<li>Name: {{item.name}}</li>
+		<li>Description: {{item.description}}</li>
+		<li>Opening time: {{item.opening_time}}</li>
+		<li>Closing time: {{item.closing_time}}</li>
+	</ul>
+    </a>
+	{% endfor %}
+
+{% endblock content%}

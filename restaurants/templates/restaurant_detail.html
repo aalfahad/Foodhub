@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block the_title %}
+The restaurant details
+{% endblock the_title %}
+
+
+{% block content %}
+	<a href="{% url 'restaurant_list' %}">
+	<p>
+		Back to the restaurants list
+		
+	</p>
+    </a>
+
+
+	<ul>
+		<li>Name: {{restaurant_detail.name}}</li>
+		<li>Description: {{restaurant_detail.description}}</li>
+		<li>Opening time: {{restaurant_detail.opening_time}}</li>
+		<li>Closing time: {{restaurant_detail.closing_time}}</li>
+	</uthe_title l>
+	The restaurant details
+	{% endblock the_title %}
+
+	
+{% endblock content%}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block the_title %}
+	Burger Menu List
+{% endblock the_title %}
+
+
+{% block content %}
+	{% for item in meals %}
+	<ul>
+		<li>Title: {{item.title}}</li>
+		<li>Description: {{item.content}}</li>
+		<li>Created on: {{item.created}}</li>
+		<li>Last updated: {{item.updated}}</li>
+	</ul>
+	{% endfor %}
+
+{% endblock content %}
