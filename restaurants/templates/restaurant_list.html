@@ -1,19 +1,34 @@
 {% extends "base.html" %}
 
 {% block the_title %}
-	Restaurant list
+	the list of Restaurants
 {% endblock the_title %}
 
 {% block content%}
+<div class="jumbotron">
+  <h1 class="display-4">Restaurants</h1>
+  <p class="lead">This is the list of restaurants for you to choose from</p>
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="{% url 'restaurant_create' %}" role="button">ADD New Restaurant</a>
+  </p>
+</div>
+<div class="row">
 	{% for item in restaurants %}
-	<a href="{% url 'restaurant_detail' restaurant_id=item.id %}">
-	<ul>
-		<li>Name: {{item.name}}</li>
-		<li>Description: {{item.description}}</li>
-		<li>Opening time: {{item.opening_time}}</li>
-		<li>Closing time: {{item.closing_time}}</li>
-	</ul>
-    </a>
+		<div class="col-md-6">
+			<div class="card">
+			  <div class="card-body">
+			    <h5 class="card-title">{{item.name}}</h5>
+			    <h6 class="card-subtitle mb-2 text-muted">{{item.opening_time}} - {{item.closing_time}}</h6>
+			    <p class="card-text">{{item.description}}</p>
+			    <a href="{% url 'restaurant_update' restaurant_id=item.id %}" class="card-link">Update</a>
+			    <a href="{% url 'restaurant_delete' restaurant_id=item.id %}" class="card-link">Delete</a>
+			    <a href="{% url 'restaurant_detail' restaurant_id=item.id %}" class="card-link">Detail</a>
+			  </div>
+			</div>
+		</div>
 	{% endfor %}
-
+</div>
 {% endblock content%}
+
+
+
