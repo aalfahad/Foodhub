@@ -35,6 +35,7 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # you choose whatever url you want. views."the_function_defined_in_the views_file"
 # you import the views file from the app

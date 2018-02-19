@@ -16,6 +16,9 @@
 	{% for item in restaurants %}
 		<div class="col-md-6">
 			<div class="card">
+				{% if article.image %}
+					<img class="card-img-top" src="{{item.image.url}}" alt="Card image cap">
+				{% endif%}
 			  <div class="card-body">
 			    <h5 class="card-title">{{item.name}}</h5>
 			    <h6 class="card-subtitle mb-2 text-muted">{{item.opening_time}} - {{item.closing_time}}</h6>

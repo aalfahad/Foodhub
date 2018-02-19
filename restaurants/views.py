@@ -26,7 +26,7 @@ def detail(request, restaurant_id):
 def create(request):
 	form = RestaurantForm()
 	if request.method == "POST":
-		form = RestaurantForm(request.POST)
+		form = RestaurantForm(request.POST, request.FILES or None)
 		if form.is_valid():
 			form.save()
 			return redirect("restaurant_list")
