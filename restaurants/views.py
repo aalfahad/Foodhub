@@ -1,7 +1,29 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .models import Restaurant
-from .forms import RestaurantForm
+from .forms import RestaurantForm,ItemForm
+from django.contrib.auth.models import User
+
+
+def like(request,restaurant_id):
+	restaurant_obj= restaurant.objects.get(id=restaurant_id)
+	like_obj, created = Like.objects.get_or_create(user=request.user, restaurant=restaurant_obj)
+
+	if created:
+		action="like"
+	else:
+		action="unlike"
+		like_obj.delete()
+
+	like_count = restaurant_obj.like_set.all().count()
+
+
+	message = "Hello"
+	context =  {
+		"action": action,
+		"count": like_count,
+	}
+	return JsonResponse(context, safe=False)
 
 def list(request):
 	context = {
@@ -52,6 +74,23 @@ def update(request, restaurant_id):
 def delete(request, restaurant_id):
 	Restaurant.objects.get(id=restaurant_id).delete()
 	return redirect("restaurant_list")
+
+def item_create(request, restaurant_id):
+	restaurant_obj = Restaurant.objects.get(id=restaurant_id)
+	form = ItemForm()
+	if request.method=="POST":
+		form = ItemForm(request.POST)
+		if form.is_valid():
+			item= form.save(commit = False)
+			item.restaurant = restaurant_obj
+			item.save()
+			return redirect ('restaurant_detail',restaurant_id=restaurant_id)
+	context = {
+		'form': form,
+		'restaurant': restaurant_obj
+	}
+	return render (request,'item_create.html',context)
+
 
 
 		# meals_dictionary = {

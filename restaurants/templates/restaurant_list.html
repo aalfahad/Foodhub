@@ -23,6 +23,12 @@
 			    <h5 class="card-title">{{item.name}}</h5>
 			    <h6 class="card-subtitle mb-2 text-muted">{{item.opening_time}} - {{item.closing_time}}</h6>
 			    <p class="card-text">{{item.description}}</p>
+			    <button class="btn btn-secondry" onclick="message()">
+			    	<span>100</span>
+					<i class="fas fa-thumbs-up "></i>
+			    </button>
+			    <br>
+
 			    <a href="{% url 'restaurant_update' restaurant_id=item.id %}" class="card-link">Update</a>
 			    <a href="{% url 'restaurant_delete' restaurant_id=item.id %}" class="card-link">Delete</a>
 			    <a href="{% url 'restaurant_detail' restaurant_id=item.id %}" class="card-link">Detail</a>
@@ -31,6 +37,21 @@
 		</div>
 	{% endfor %}
 </div>
+<script >
+	function message(){
+		$.ajax({
+			type:"GET",
+			url:"{% url 'like-button' %}"
+			error:function(){
+				console.log("Noob, you couldn't do it.")
+			},
+			success:function(data){
+				console.log(data)
+			}
+		})
+	}
+</script>
+
 {% endblock content%}
 
 

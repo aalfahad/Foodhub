@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}
+Create item for the restaurant
+{% endblock title %}
+
+{% block content %}
+	<form action="{% url 'item_create' restaurant_id=restaurant_obj.id %}" method="POST" >
+		{% csrf_token %}
+		{{form|crispy}}
+		<input type="submit" value="Create Item" class="btn btn-outline-success">
+	</form>
+
+
+{% endblock content %}

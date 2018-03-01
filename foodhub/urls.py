@@ -26,7 +26,10 @@ urlpatterns = [
     path('restaurant_detail/<int:restaurant_id>/', views.detail, name="restaurant_detail"),
     path('create/',views.create,name="restaurant_create"),
     path('update/<int:restaurant_id>/',views.update,name="restaurant_update"),
-    path('delete/<int:restaurant_id>/',views.delete,name="restaurant_delete")
+    path('delete/<int:restaurant_id>/',views.delete,name="restaurant_delete"),
+    path('item/create/<int:restaurant_id>/',views.item_create,name="item_create"),
+    path('like/<int:restaurant_id>/', views.like, name= 'like_button')
+
 
     # path('burgermenu_list_page/', views.burger_menu_list),
 

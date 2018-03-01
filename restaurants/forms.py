@@ -1,5 +1,5 @@
 from django import forms
-from .models import Restaurant
+from .models import Restaurant,Item
 
 class RestaurantForm(forms.ModelForm):
     class Meta:
@@ -11,3 +11,10 @@ class RestaurantForm(forms.ModelForm):
         	"opening_time": forms.TimeInput(attrs={"type":"time"}),
         	"closing_time": forms.TimeInput(attrs={"type":"time"}),
         }
+
+class ItemForm(forms.ModelForm):
+	"""docstring for ItemForm"""
+	class Meta:
+		model = Item
+		fields = '__all__'
+		exclude = ['restaurant']
