@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 
 def like(request,restaurant_id):
-	restaurant_obj= restaurant.objects.get(id=restaurant_id)
+	restaurant_obj= Restaurant.objects.get(id=restaurant_id)
 	like_obj, created = Like.objects.get_or_create(user=request.user, restaurant=restaurant_obj)
 
 	if created:
@@ -26,8 +26,19 @@ def like(request,restaurant_id):
 	return JsonResponse(context, safe=False)
 
 def list(request):
+	restaurant_obj= Restaurant.objects.all()
+	restaurant_obj=restaurant_obj.order_by('name')
+	query= request.GET.get('q')
+	if query:
+		restaurant_obj= restaurant_obj.filter(title_contains=query)
+
+	like_obj= []
+	likes= request.user.like_set.all()
+	for like in likes:
+		like_obj.append(like.restaurant)
 	context = {
-	"restaurants": Restaurant.objects.all(),
+	"restaurants": restaurant_obj,
+	"my_likes": like_obj,
 
 	}
 	return render(request, 'restaurant_list.html', context)

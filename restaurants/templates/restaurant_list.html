@@ -23,9 +23,10 @@
 			    <h5 class="card-title">{{item.name}}</h5>
 			    <h6 class="card-subtitle mb-2 text-muted">{{item.opening_time}} - {{item.closing_time}}</h6>
 			    <p class="card-text">{{item.description}}</p>
-			    <button class="btn btn-secondry" onclick="message()">
-			    	<span>100</span>
-					<i class="fas fa-thumbs-up "></i>
+			    <button class="btn btn-secondry" onclick="message({{restaurant.id}})">
+			    	<span id="heart-number-{{restaurant.id}}">{{restaurant.like_set.count}}</span>
+					<i id= "heart-color-{{restaurant.id}}" 
+					   class="fas fa-heart {% if restaurant in my_likes %}text-danger{% endif %}"></i>
 			    </button>
 			    <br>
 
@@ -46,7 +47,14 @@
 				console.log("Noob, you couldn't do it.")
 			},
 			success:function(data){
-				console.log(data)
+				console.log(data);
+				$("heart-number").text(data.number);
+				if(data.action==="like"){
+					$("#heart-color").addClass("text-danger")
+				}
+				else{
+					$("#heart-color").removeClass("text-danger")
+				}
 			}
 		})
 	}
