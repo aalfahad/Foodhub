@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from .models import Restaurant
-from .forms import RestaurantForm,ItemForm
+from .forms import RestaurantForm,ItemForm, UserSignup, UserLogin
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 
 
 def like(request,restaurant_id):
@@ -15,7 +16,7 @@ def like(request,restaurant_id):
 		action="unlike"
 		like_obj.delete()
 
-	like_count = restaurant_obj.like_set.all().count()
+	like_count = restaurant_obj.favrest_set.all().count()
 
 
 	message = "Hello"
@@ -33,7 +34,7 @@ def list(request):
 		restaurant_obj= restaurant_obj.filter(title_contains=query)
 
 	like_obj= []
-	likes= request.user.like_set.all()
+	likes= request.user.favrest_set.all()
 	for like in likes:
 		like_obj.append(like.restaurant)
 	context = {
@@ -101,6 +102,49 @@ def item_create(request, restaurant_id):
 		'restaurant': restaurant_obj
 	}
 	return render (request,'item_create.html',context)
+
+def usersignup(request):
+	context = {}
+	form= UserSignup()
+	context['form']= form
+	if request.method == 'POST':
+		form= UserSignup(request.POST)
+		if form.is_valid():
+			user = form.save()
+			username= user.username
+			password= user.password
+
+			user.set_password(password)
+			user.save()
+
+			auth_user= authenticate(username=username,password=password)
+			login(request,auth_user)
+
+			return redirect("restaurant_list")
+	return render(request, 'signup.html', context)
+
+
+def userlogin(request):
+    context = {}
+    form = UserLogin()
+    context['form'] = form
+    if request.method == 'POST':
+        form = UserLogin(request.POST)
+        if form.is_valid():
+
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+
+            auth_user = authenticate(username=username, password=password)
+            if auth_user is not None:
+                login(request, auth_user)
+                return redirect('restaurant_list')
+    return render(request, 'login.html', context)
+
+
+def userlogout(request):
+    logout(request)
+    return redirect("restaurant_list")
 
 
 
