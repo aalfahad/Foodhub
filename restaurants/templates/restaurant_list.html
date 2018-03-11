@@ -42,7 +42,7 @@
 	function message(){
 		$.ajax({
 			type:"GET",
-			url:"{% url 'like_button/' restaurant_id=item.id %}"
+			url:"{% url 'like_button' restaurant_id=3 %}"
 			error:function(){
 				console.log("Noob, you couldn't do it.")
 			},
