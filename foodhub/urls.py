@@ -18,6 +18,7 @@ from django.urls import path
 from restaurants import views
 from django.conf import settings
 from django.conf.urls.static import static
+from api.views import RestaurantListAPIView,RestaurantDetailAPIView,RestaurantDeleteAPIView,RestaurantCreateAPIView,RestaurantUpdateAPIView
 
 
 urlpatterns = [
@@ -33,7 +34,11 @@ urlpatterns = [
     path('login/', views.userlogin, name="login"),
     path('logout/', views.userlogout, name="logout"),
 
-
+    path('apilist/',RestaurantListAPIView.as_view()),
+    path('apidetail/<int:restaurant_id>/',RestaurantDetailAPIView.as_view()),
+    path('apidelete/<int:restaurant_id>/',RestaurantDeleteAPIView.as_view()),
+    path('apicreate/',RestaurantCreateAPIView.as_view()),
+    path('apiupdate/<int:restaurant_id>/',RestaurantUpdateAPIView.as_view()),
 
     # path('burgermenu_list_page/', views.burger_menu_list),
 
