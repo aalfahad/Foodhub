@@ -23,7 +23,7 @@ class ItemForm(forms.ModelForm):
 class UserSignup(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['username','password']
+        fields = ['username','email','first_name','last_name','password']
 
         widgets= {
             'password': forms.PasswordInput(),

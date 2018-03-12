@@ -31,7 +31,7 @@ def list(request):
 	restaurant_obj=restaurant_obj.order_by('name')
 	query= request.GET.get('q')
 	if query:
-		restaurant_obj= restaurant_obj.filter(title_contains=query)
+		restaurant_obj= restaurant_obj.filter(title__contains=query)
 
 	like_obj= []
 	likes= request.user.favrest_set.all()
@@ -73,7 +73,7 @@ def update(request, restaurant_id):
 	restaurant_obj = Restaurant.objects.get(id=restaurant_id)
 	form = RestaurantForm(instance = restaurant_obj)
 	if request.method == "POST":
-		form = RestaurantForm(request.POST, instance=restaurant_obj)
+		form = RestaurantForm(request.POST,request.FILES, instance=restaurant_obj)
 		if form.is_valid():
 			form.save()
 			return redirect("restaurant_detail",restaurant_id=restaurant_obj.id)
@@ -110,15 +110,15 @@ def usersignup(request):
 	if request.method == 'POST':
 		form= UserSignup(request.POST)
 		if form.is_valid():
-			user = form.save()
-			username= user.username
-			password= user.password
+			user = form.save(commit= False)
+			#username= user.username
+			#password= user.password
 
 			user.set_password(password)
 			user.save()
 
-			auth_user= authenticate(username=username,password=password)
-			login(request,auth_user)
+			#auth_user= authenticate(username=username,password=password)
+			#login(request,auth_user)
 
 			return redirect("restaurant_list")
 	return render(request, 'signup.html', context)
