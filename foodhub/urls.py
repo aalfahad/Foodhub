@@ -34,11 +34,11 @@ urlpatterns = [
     path('login/', views.userlogin, name="login"),
     path('logout/', views.userlogout, name="logout"),
 
-    path('apilist/',RestaurantListAPIView.as_view()),
-    path('apidetail/<int:restaurant_id>/',RestaurantDetailAPIView.as_view()),
-    path('apidelete/<int:restaurant_id>/',RestaurantDeleteAPIView.as_view()),
-    path('apicreate/',RestaurantCreateAPIView.as_view()),
-    path('apiupdate/<int:restaurant_id>/',RestaurantUpdateAPIView.as_view()),
+    path('apilist/',RestaurantListAPIView.as_view(),name="apilist"),
+    path('apidetail/<int:restaurant_id>/',RestaurantDetailAPIView.as_view(),name= "apidetail"),
+    path('apidelete/<int:restaurant_id>/',RestaurantDeleteAPIView.as_view(),name= "apidelete"),
+    path('apicreate/',RestaurantCreateAPIView.as_view(),name= "apicreate"),
+    path('apiupdate/<int:restaurant_id>/',RestaurantUpdateAPIView.as_view(),name= "apiupdate"),
 
     # path('burgermenu_list_page/', views.burger_menu_list),
 
